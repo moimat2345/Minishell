@@ -53,6 +53,7 @@ Minishell reads user input, tokenizes it, parses tokens into commands, and execu
 | **Here-doc** | `<< DELIMITER` multi-line input |
 | **Variables** | `$VAR` expansion, `$?` for exit code |
 | **Quotes** | `'single'` (literal) and `"double"` (with expansion) |
+| **Tilde** | `~` expands to HOME directory |
 | **Signals** | Ctrl+C, Ctrl+D, Ctrl+\ handling |
 | **Built-ins** | cd, echo, env, exit, export, pwd, unset |
 
@@ -764,6 +765,20 @@ minishell$ echo $MY_VAR
 minishell$ unset MY_VAR
 minishell$ exit 0
 ```
+
+---
+
+## Exit Codes
+
+| Code | Meaning |
+|------|---------|
+| `0` | Success |
+| `1` | General error (file not found, etc.) |
+| `2` | Syntax error (invalid command syntax) |
+| `126` | Permission denied (file not executable) |
+| `127` | Command not found |
+| `130` | Interrupted by Ctrl+C (SIGINT) |
+| `131` | Quit by Ctrl+\ (SIGQUIT) |
 
 ---
 
