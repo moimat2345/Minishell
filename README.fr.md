@@ -1,9 +1,25 @@
-# Minishell
+<div align="center">
+  <img src="https://raw.githubusercontent.com/ayogun/42-project-badges/main/covers/cover-minishell-bonus.png" alt="minishell" />
+</div>
 
-[![en](https://img.shields.io/badge/lang-en-blue.svg)](README.md)
-[![fr](https://img.shields.io/badge/lang-fr-red.svg)](README.fr.md)
+# Minishell - As Beautiful as a Shell
 
 Une implementation legere d'un shell UNIX en C, reproduisant les fonctionnalites principales de bash. Ce projet fait partie du cursus de l'ecole 42 et demontre des concepts de programmation systeme incluant la gestion des processus, les descripteurs de fichiers et la gestion des signaux.
+
+## Status
+<div align="center">
+
+![42 Bangkok](https://img.shields.io/badge/42-Bangkok-000000?style=for-the-badge&logo=42&logoColor=white)
+![C](https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white)
+![Norminette](https://img.shields.io/badge/Norminette-passing-success?style=for-the-badge)
+
+<br>
+
+### 🌍 Language / Langue
+
+[![English](https://img.shields.io/badge/🇬🇧_Read_in_English-blue?style=for-the-badge&logoColor=white)](README.md)
+
+</div>
 
 ---
 
@@ -46,12 +62,14 @@ Minishell lit l'entree utilisateur, la tokenise, parse les tokens en commandes, 
 | Fonctionnalite | Description |
 |----------------|-------------|
 | **Prompt** | Prompt interactif utilisant GNU readline |
+| **SHLVL** | Suivi du niveau de shell (incremente lors des shells imbriques) |
 | **Historique** | Navigation dans l'historique avec les fleches |
 | **Pipes** | Enchainer plusieurs commandes : `cmd1 \| cmd2 \| cmd3` |
 | **Redirections** | `<` entree, `>` sortie, `>>` ajout |
 | **Here-doc** | `<< DELIMITEUR` entree multi-ligne |
 | **Variables** | Expansion `$VAR`, `$?` pour le code de retour |
 | **Quotes** | `'simple'` (litteral) et `"double"` (avec expansion) |
+| **Tilde** | `~` s'etend vers le repertoire HOME |
 | **Signaux** | Gestion de Ctrl+C, Ctrl+D, Ctrl+\ |
 | **Built-ins** | cd, echo, env, exit, export, pwd, unset |
 
@@ -231,7 +249,7 @@ void lexer_main(t_data *data)
 
 #### Etape 1 : Decoupage des Tokens (`cut_lexeur`)
 
-**Fichier :** [identify_tokens.c](src/lexer/identify_tokens.c)
+**Fichier :** [lexer.c](src/lexer/lexer.c)
 
 Decoupe la chaine d'entree en tokens selon :
 - **Les espaces** (espaces, tabulations) - separateurs de tokens
@@ -496,7 +514,7 @@ Les built-ins sont executes directement par le shell, pas via `execve()`.
 
 | Commande | Fichier | Description |
 |----------|---------|-------------|
-| `cd` | [cd.c](src/build_in/cd.c) | Change de repertoire, met a jour PWD/OLDPWD |
+| `cd` | [cd.c](src/build_in/cd.c) | Change de repertoire, supporte l'expansion `~`, met a jour PWD/OLDPWD |
 | `echo` | [echo.c](src/build_in/echo.c) | Affiche les arguments, supporte le flag `-n` |
 | `env` | [env.c](src/build_in/env.c) | Affiche les variables d'environnement |
 | `exit` | [exit.c](src/build_in/exit.c) | Quitte le shell avec un code de retour |
@@ -718,6 +736,7 @@ make        # Compiler minishell
 make clean  # Supprimer les fichiers objets
 make fclean # Supprimer les objets et l'executable
 make re     # Recompiler depuis zero
+make header # Compiler l'executable de l'animation ASCII
 ```
 
 Prerequis :
@@ -762,6 +781,38 @@ minishell$ echo $MA_VAR
 minishell$ unset MA_VAR
 minishell$ exit 0
 ```
+
+---
+
+## Codes de Retour
+
+| Code | Signification |
+|------|---------------|
+| `0` | Succes |
+| `1` | Erreur generale (fichier non trouve, etc.) |
+| `2` | Erreur de syntaxe (syntaxe de commande invalide) |
+| `126` | Permission refusee (fichier non executable) |
+| `127` | Commande non trouvee |
+| `130` | Interrompu par Ctrl+C (SIGINT) |
+| `131` | Quitte par Ctrl+\ (SIGQUIT) |
+
+---
+
+## Limitations
+
+Ce minishell implemente les fonctionnalites principales de bash mais n'inclut pas :
+
+| Fonctionnalite | Description |
+|----------------|-------------|
+| Globbing | Pas d'expansion des wildcards (`*`, `?`, `[...]`) |
+| Controle des jobs | Pas de jobs en arriere-plan (`&`, `bg`, `fg`, `jobs`) |
+| Substitution de commande | Pas de `$(cmd)` ou backticks |
+| Operateurs logiques | Pas de chainage `&&` ou `\|\|` |
+| Expansion arithmetique | Pas de `$((1+1))` |
+| Alias | Pas de commandes alias/unalias |
+| Fonctions | Pas de definitions de fonctions shell |
+| Tableaux | Pas de variables tableau |
+| Instructions conditionnelles | Pas de `if`, `for`, `while`, `case` |
 
 ---
 

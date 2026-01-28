@@ -1,9 +1,25 @@
-# Minishell
+<div align="center">
+  <img src="https://raw.githubusercontent.com/ayogun/42-project-badges/main/covers/cover-minishell-bonus.png" alt="minishell" />
+</div>
 
-[![en](https://img.shields.io/badge/lang-en-blue.svg)](README.md)
-[![fr](https://img.shields.io/badge/lang-fr-red.svg)](README.fr.md)
+# Minishell - As Beautiful as a Shell
 
 A lightweight UNIX shell implementation in C, recreating core functionalities of bash. This project is part of the 42 school curriculum and demonstrates system programming concepts including process management, file descriptors, and signal handling.
+
+## Status
+<div align="center">
+
+![42 Bangkok](https://img.shields.io/badge/42-Bangkok-000000?style=for-the-badge&logo=42&logoColor=white)
+![C](https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white)
+![Norminette](https://img.shields.io/badge/Norminette-passing-success?style=for-the-badge)
+
+<br>
+
+### 🌍 Language / Langue
+
+[![Français](https://img.shields.io/badge/🇫🇷_Lire_en_Français-blue?style=for-the-badge&logoColor=white)](README.fr.md)
+
+</div>
 
 ---
 
