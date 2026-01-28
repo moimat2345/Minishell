@@ -46,6 +46,7 @@ Minishell reads user input, tokenizes it, parses tokens into commands, and execu
 | Feature | Description |
 |---------|-------------|
 | **Prompt** | Interactive prompt using GNU readline |
+| **SHLVL** | Shell level tracking (incremented on nested shells) |
 | **History** | Command history navigation with arrow keys |
 | **Pipes** | Chain multiple commands: `cmd1 \| cmd2 \| cmd3` |
 | **Redirections** | `<` input, `>` output, `>>` append |
@@ -231,7 +232,7 @@ void lexer_main(t_data *data)
 
 #### Step 1: Token Splitting (`cut_lexeur`)
 
-**File:** [identify_tokens.c](src/lexer/identify_tokens.c)
+**File:** [lexer.c](src/lexer/lexer.c)
 
 Splits the input string into tokens based on:
 - **Whitespace** (spaces, tabs) - token separators
@@ -496,7 +497,7 @@ Built-ins are executed directly by the shell, not via `execve()`.
 
 | Command | File | Description |
 |---------|------|-------------|
-| `cd` | [cd.c](src/build_in/cd.c) | Change directory, updates PWD/OLDPWD |
+| `cd` | [cd.c](src/build_in/cd.c) | Change directory, supports `~` expansion, updates PWD/OLDPWD |
 | `echo` | [echo.c](src/build_in/echo.c) | Print arguments, supports `-n` flag |
 | `env` | [env.c](src/build_in/env.c) | Print environment variables |
 | `exit` | [exit.c](src/build_in/exit.c) | Exit shell with status code |
@@ -718,6 +719,7 @@ make        # Build minishell
 make clean  # Remove object files
 make fclean # Remove objects and executable
 make re     # Rebuild from scratch
+make header # Build ASCII art header executable
 ```
 
 Requirements:
@@ -762,6 +764,24 @@ minishell$ echo $MY_VAR
 minishell$ unset MY_VAR
 minishell$ exit 0
 ```
+
+---
+
+## Limitations
+
+This minishell implements the core features of bash but does not include:
+
+| Feature | Description |
+|---------|-------------|
+| Globbing | No wildcard expansion (`*`, `?`, `[...]`) |
+| Job control | No background jobs (`&`, `bg`, `fg`, `jobs`) |
+| Command substitution | No `$(cmd)` or backticks |
+| Logical operators | No `&&` or `\|\|` chaining |
+| Arithmetic expansion | No `$((1+1))` |
+| Aliases | No alias/unalias commands |
+| Functions | No shell function definitions |
+| Arrays | No array variables |
+| Conditional statements | No `if`, `for`, `while`, `case` |
 
 ---
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: matnusko <matnusko@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mateon <mateon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 20:37:07 by mateon            #+#    #+#             */
-/*   Updated: 2026/01/14 17:05:31 by matnusko         ###   ########.fr       */
+/*   Updated: 2026/01/28 17:47:37 by mateon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	main(int argc, char **argv, char **envp)
 	data = malloc(sizeof(t_data));
 	if (!data)
 		exit_with_error("Memory allocation failed", 1, NULL);
-	//header();
+	header();
 	init_data(data, envp);
 	while (1)
 	{
