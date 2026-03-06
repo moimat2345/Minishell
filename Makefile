@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: matnusko <matnusko@student.42.fr>          +#+  +:+       +#+         #
+#    By: mateon <mateon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/12 17:47:46 by mateon            #+#    #+#              #
-#    Updated: 2026/01/14 10:32:00 by matnusko         ###   ########.fr        #
+#    Updated: 2026/03/06 09:16:19 by mateon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,12 @@ CC			=	cc
 
 CFLAGS		=	-Wall -Wextra -Werror
 
-LDFLAGS		=	-lreadline
+
+# Linux flags
+#LDFLAGS		=	-lreadline
+# Mac flags
+READLINE_DIR	=	$(shell brew --prefix readline)
+LDFLAGS		=	-L$(READLINE_DIR)/lib -lreadline
 
 RM			=	rm -f
 
@@ -98,7 +103,10 @@ all: $(NAME)
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(OBJ_DIR)
-	@$(CC) $(CFLAGS) -I $(INCLUDES) -c $< -o $@
+	# Linux flags
+	#@$(CC) $(CFLAGS) -I $(INCLUDES) -c $< -o $@
+	# Mac flags
+	@$(CC) $(CFLAGS) -I $(INCLUDES) -I$(READLINE_DIR)/include -c $< -o $@
 	@echo "Compiled: $<"
 
 $(NAME): $(MY_LIB) $(OBJS)
